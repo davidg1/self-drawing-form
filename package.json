@@ -1,0 +1,22 @@
+{
+  "name": "self-drawing-form",
+  "version": "1.0.0",
+  "description": "Uses the Vivus JavaScript Library to generated a self-drawing form.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "browser-sync": "browser-sync start --proxy \"localhost:3000\" --files \"public/*.html, public/css/*.css, public/js/*.js, views/*.ejs, views/partials/*.ejs\""
+  },
+  "author": "David Garrison",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-sanitizer": "^1.0.2",
+    "helmet": "^3.9.0",
+    "mysql": "^2.15.0",
+    "nodemailer": "^4.4.1",
+    "nodemailer-html-to-text": "^2.1.0",
+    "serve-favicon": "^2.4.5"
+  }
+}
