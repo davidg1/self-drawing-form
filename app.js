@@ -101,12 +101,12 @@ app.post('/contact-us', (req, res) => {
   // Use middleware that converts HTML body into plain text body
   transporter.use('compile', htmlToText());
 
-  // // Send Email
-  // transporter.sendMail(mailOptions, (error, info) => {
-  //   if (error) {
-  //     return console.log(error);
-  //   }
-  // });
+  // Send Email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+  });
 
   /********************** Render the confirmation view ************************/
   res.render('confirmation', {
