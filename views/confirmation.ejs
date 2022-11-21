@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Message Received Confirmation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Architects+Daughter">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+
+  <body id="confirmation-body">
+    <div id="confirmation-wrapper">
+      <div id="confirmation">
+        <p>Hi <span class="submitted-info"><%=name%></span>,</p>
+        <p>You have sent the following message:</p>
+        <% if (addToMailingList) { %>
+          <p><span class="submitted-info">You have opted to be added to our mailing list.</span></p>
+        <% } %>
+        <p>Subject: <span class="submitted-info"><%= subject %></span></p>
+        <p><span class="submitted-info"><%= message %></span></p>
+        <p id="email-sentence">A confirmation email will be sent to:</p>
+        <p id="email"><span class="submitted-info"><%= email %></span></p>
+      </div>
+    </div>
+  </body>
+</html>

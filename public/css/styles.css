@@ -1,0 +1,695 @@
+/********************************* <body> *************************************/
+body {
+  background: #4682B4;
+  font-size: 62.5%;
+}
+
+
+/***********************************************************************************************
+***************************** wrapper div and background image *********************************
+************************************************************************************************
+The spiral-notebook background image has dimensions of 700px x 885px (w x h).
+
+For browser viewport widths of 1025px and higher: The wrapper div is set to a fixed width of
+700px and a fixed height of 885px (matching the dimensions of the background image).  There is
+no padding so the wrapper div has a CONTENT area of 700px x 885px in which the background image
+is displayed.
+
+For browser viewport widths of 320px to 1024px: The wrapper div is set to a width of 100% of
+the body's width (its containing element). Its height is set to 0 so its CONTENT area has no
+height. Its padding-top is set to 126.42857% of the body's width which was calculated based the
+aspect ratio of the spiral-notebook background image ((885/700) x 100).  The wrapper div has
+a PADDING area with an aspect ratio that matches the background image and the background image
+is scaled to fit in it.
+
+For browser viewport widths of  319px and lower: The wrapper div is set to a fixed width of
+320px and a fixed height of 405px (matching the aspect ratio of the background image). There is
+no padding so the wrapper div has a CONTENT area of 320px x 405px to which the background image
+is scaled.
+/***********************************************************************************************
+************************************************************************************************
+***********************************************************************************************/
+#wrapper {
+  /* Make this wrapper div a positioned element. */
+  position: relative;
+  background-image: url("../images/spiral-notebook.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: contain;
+  height: 0;
+  padding-top: 126.42857%;  /* (885px/700px) x 100 = percentage based on aspect ratio of spiral-notebook background image */
+}
+
+@media (min-width: 1025px) {
+  #wrapper {
+    width: 700px;
+    height: 885px;
+    margin: 0 auto;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 319px) {
+  #wrapper {
+    width: 320px;
+    height: 405px;
+    margin: 0 auto;
+    padding-top: 0;
+  }
+}
+
+
+
+/********************************* <form> *************************************/
+form {
+  padding-top: 21.42857%;
+
+  /* Offsets the padding-top of the parent div#wrapper.
+    A negative margin-top applied to a static element pulls the element upwards. */
+  margin-top: -126.42857%;
+}
+
+@media (min-width: 1025px) {
+  form {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 479px) {
+  form {
+    padding-top: 19.83299%;
+  }
+}
+
+@media (max-width: 319px) {
+  form {
+    padding-top: 55px;
+    margin-top: 0;
+  }
+}
+
+
+
+/************************* General SVG Styles *********************************/
+svg {
+  fill-opacity: 0;
+  transition: fill-opacity 1s;
+}
+
+svg.drawn {
+  fill-opacity: 1;
+}
+
+svg path, svg line {
+  stroke: #000;
+}
+
+
+
+/************** Contact Us SVG and Pencil SVG Related Styles ******************/
+#contact-us-svg-container, #pencil-svg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#contact-us-svg, #pencil-svg {
+  width: 100%;
+  height: 100%;
+}
+
+#contact-us-svg-container {
+  width: 25.57143%;  /* (179px/700px) x 100 = percentage of SVG's width relative to spiral-notebook background image's width */
+  height: 9.49153%;  /* (84px/885px) x 100 = percentage of SVG's height relative to spiral-notebook background image's height */
+  margin-top: 30.71429%;
+  margin-left: 57.85714%;
+}
+
+#contact-us-svg #outlines path, #contact-us-svg #outlines line {
+  stroke-width: 0.5;
+}
+
+#contact-us-svg #hatch path, #contact-us-svg #hatch line {
+  stroke-width: 0.4;
+}
+
+#pencil-svg-container {
+  width: 29.85714%;  /* (209px/700px) x 100 = percentage of SVG's width relative to spiral-notebook background image's width */
+  height: 16.15819%; /* (143px/885px) x 100 = percentage of SVG's height relative to spiral-notebook background image's height */
+  margin-top: 42.85714%;
+  margin-left: 56.42857%;
+}
+
+#pencil-svg path {
+  stroke-width: 0.6;
+}
+
+#eraser path {
+  fill: #f98c8c;
+}
+
+#ferrule {
+  fill: #b5f9b8;
+}
+
+#paint path {
+  fill: #f0ea67;
+}
+
+#wood {
+  fill: #f9e3b4;
+}
+
+#lead {
+  fill: #000;
+}
+
+@media (min-width: 590px) and (max-width: 699px) {
+  #contact-us-svg-container {
+    margin-top: 32.14286%;
+  }
+
+  #pencil-svg-container {
+    margin-top: 44.28571%;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 589px) {
+  #contact-us-svg-container {
+    margin-top: 33.28571%;
+  }
+
+  #pencil-svg-container {
+    margin-top: 45.42857%;
+  }
+}
+
+
+
+
+/****************************************************************************************************
+*********** Explanation of Positioning and Sizing of HTML elements and SVG images *******************
+*****************************************************************************************************
+The div elements that contain the Contact Us and Pencil SVG images are absolutely positioned relative
+to the div#wrapper.
+
+The <form> is NOT absolutely positioned and is in its static position. Therefore nothing is absolutely
+positioned relative to the <form>.
+
+The form includes three text boxes, one checkbox, one textarea and one button.  For each of these
+you have an HTML control element (<input>, <textarea> or <button>) "grouped" with its associated SVG
+inside of a div (the checkbox actually has two SVG images associated with it: one for the checkbox and
+one for the checkmark).  There are two important points regarding these div elements:
+1) They are positioned absolutely relative to the div#wrapper BUT their top, bottom, left and right
+properties are not set and therefore have the default value of "auto".  Additionally the height
+property of each div element is not auto but set to a percentage value.  Because of this
+combination of property values the div elements are positioned in the same location as they would
+be if they were positioned statically. Details of this behavior can be found in section 8.1
+(bullet #2) and 8.3 (bullet #2) of the specification (https://www.w3.org/TR/css-position-3/#abs-pos).
+2) These divs are positioned absolutely AND have their height property set to a percentage value.
+Section 10.5 of the specification (https://www.w3.org/TR/CSS21/visudet.html#propdef-height) states:
+"For absolutely positioned elements whose containing block is based on a block-level element, the
+percentage is calculated with respect to the height of the padding box of that element."  The fact
+that the percentage is based on the padding box is important because for some browser viewport resolutions
+the height of the content area of the div#wraper is 0 because its height property is set to 0 (but when
+this is the case its padding-top is set to a percentage value as described in earlier comments above).
+
+As discussed above each HTML control element is "grouped" with its associated SVG inside of an absolutely
+positioned div. Both the HTML control element and its associated SVG image are absolutely positioned
+relative to this div.  They are positioned so that they overlap and are aligned.  Using the z-index
+property, the HTML control element is on top of the SVG image.  The control element is styled so that it
+is transparent so you can see the underlying SVG image. Both the HTML control element and the SVG image
+have their height properties set to a percentage value that is relative to their parent div.
+
+Associated with each form control is a <label> element that is statically positioned.
+/****************************************************************************************************
+*****************************************************************************************************
+****************************************************************************************************/
+
+
+/*********************** General <label> Styles *******************************/
+label {
+  font-size: 1.6em;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+@media (max-width: 479px) {
+  label {
+    font-size: 1.2em;
+  }
+}
+
+label.shown {
+  opacity: 1;
+}
+
+
+
+/******************************* Text Boxes ***********************************/
+#name-label, #email-label, #subject-label {
+  display: block;
+  font-family: 'Cabin Sketch';
+  margin-bottom: 0.28571%;
+  margin-left: 13.14286%;
+}
+
+#name-label, #email-label {
+  margin-top: 7.14286%;
+}
+
+#subject-label {
+  margin-top: 17.71429%;
+}
+
+#name-control-group, #email-control-group, #subject-control-group {
+  position: absolute;
+  width: 36%;
+  height: 3.84181%;
+  margin-left: 12.85714%;
+}
+
+#name-text-box, #email-text-box, #subject-text-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background-color: transparent;
+  font-size: 1.6em;
+  padding-top: 3px;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+@media (max-width: 1024px) {
+  #name-text-box, #email-text-box, #subject-text-box {
+    font-size: 1.8em;
+    padding-top: 3px;
+    padding-right: 9px;
+    padding-left: 11px;
+  }
+}
+
+@media (max-width: 879px) {
+  #name-text-box, #email-text-box, #subject-text-box {
+    font-size: 1.7em;
+    padding-top: 3px;
+    padding-right: 8px;
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 699px) {
+  #name-text-box, #email-text-box, #subject-text-box {
+    font-size: 1.4em;
+    padding-top: 2px;
+    padding-right: 5px;
+    padding-left: 7px;
+  }
+}
+
+@media (max-width: 479px) {
+  #name-text-box, #email-text-box, #subject-text-box {
+    font-size: 1.2em;
+    padding-top: 4px;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
+
+@media (max-width: 389px) {
+  #name-text-box, #email-text-box, #subject-text-box {
+    font-size: 1em;
+    padding-top: 3px;
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+}
+
+#name-text-box:focus, #email-text-box:focus, #subject-text-box {
+  outline: none;
+}
+
+#name-text-box-svg, #email-text-box-svg, #subject-text-box-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#name-text-box-svg path, #email-text-box-svg path, #subject-text-box-svg path {
+  fill: #FEF9DD;
+  stroke-width: 1;
+}
+
+#name-text-box-svg line, #email-text-box-svg line, #subject-text-box-svg line {
+  stroke-width: 1;
+}
+
+
+
+/*************************** Message Textarea *********************************/
+#message-label {
+  display: block;
+  font-family: 'Cabin Sketch';
+  margin-top: 7.14286%;
+  margin-bottom: 0.28571%;
+  margin-left: 12.85714%;
+}
+
+#message-control-group {
+  position: absolute;
+  width: 67.85714%;
+  height: 24.40678%;
+  margin-left: 12.85714%;
+}
+
+#message-textarea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 99%;
+  height: 95%;
+  border: 0;
+  background: transparent;
+  resize: none;
+  font-size: 1.6em;
+  padding-top: 6px;
+  padding-right: 11px;
+  padding-left: 12px;
+  margin-top: 0.85714%;
+}
+
+@media (max-width: 1024px) {
+  #message-textarea {
+    font-size: 1.8em;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-left: 14px;
+  }
+}
+
+@media (max-width: 879px) {
+  #message-textarea {
+    font-size: 1.7em;
+    padding-top: 6px;
+    padding-right: 10px;
+    padding-left: 12px;
+  }
+}
+
+@media (max-width: 699px) {
+  #message-textarea {
+    font-size: 1.4em;
+    padding-top: 5px;
+    padding-right: 9px;
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 479px) {
+  #message-textarea {
+    font-size: 1.2em;
+    padding-top: 5px;
+    padding-right: 8px;
+    padding-left: 9px;
+  }
+}
+
+@media (max-width: 389px) {
+  #message-textarea {
+    font-size: 1em;
+    padding-top: 4px;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+}
+
+#message-textarea:focus {
+  outline: none;
+}
+
+#message-textarea-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#message-textarea-svg path {
+  fill: #FEF9DD;
+  stroke-width: 1;
+}
+
+
+
+/************************** Mailing List Checkbox *****************************/
+#mailing-list-control-group {
+  position: absolute;
+  width: 3%;
+  height: 2.37288%;
+  min-width: 13px;
+  min-height: 13px;
+  margin-top: 10.14286%;
+  margin-left: 13.57143%;
+}
+
+#mailing-list-checkbox, #mailing-list-label, #mailing-list-checkbox-svg, #mailing-list-checkmark-svg {
+  position: absolute;
+}
+
+#mailing-list-checkbox {
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+#mailing-list-label {
+  top: 15%;
+  left: 135%;
+  font-family: 'Architects Daughter';
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-size: 1.5em;
+}
+
+@media (max-width: 1024px) {
+  #mailing-list-label {
+    top: 18%;
+  }
+}
+
+@media (max-width: 767px) {
+  #mailing-list-label {
+    top: 13%;
+    font-size: 1.4em;
+  }
+}
+
+@media (max-width: 579px) {
+  #mailing-list-label {
+    top: 9%;
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 479px) {
+  #mailing-list-label {
+    top: 4%;
+    font-size: 1.3em;
+    text-transform: none;  /* So text does to overlap with pencil SVG */
+  }
+}
+
+@media (max-width: 349px) {
+  #mailing-list-label {
+    top: 15%;
+    font-size: 1.2em;
+  }
+}
+
+#mailing-list-checkbox-svg {
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#mailing-list-checkbox-svg path {
+  fill: #FEF9DD;
+  stroke-width: 1;
+}
+
+#mailing-list-checkmark-svg {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+#mailing-list-checkmark-svg path {
+  stroke-width: 3;
+  stroke: #0a002f;
+}
+
+
+
+/******************************** <button> ************************************/
+#send-button-control-group {
+  position: absolute;
+  width: 14.71429%;
+  height: 4.85876%;
+  margin-top: 32.85714%;
+  margin-left: 39%;
+}
+
+#send-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+#send-button-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#send-button-outline path {
+  stroke-width: 1;
+  fill: #ACDFE5;
+}
+
+#send-button-letters path {
+  stroke-width: 0.3;
+  fill: #000;
+}
+
+input:focus + #name-text-box-svg path,
+input:focus + #email-text-box-svg path,
+input:focus + #subject-text-box-svg path,
+input:focus + #mailing-list-checkbox-svg path,
+textarea:focus + #message-textarea-svg path {
+  fill: #ffdbb6;
+}
+
+
+
+/*********************** Form Validation Related Styles ***********************/
+input:invalid + div > #email-text-box-svg path {
+  fill: #eb9e9e;
+}
+
+#name-text-box-svg.invalid path,
+#email-text-box-svg.invalid path,
+#subject-text-box-svg.invalid path,
+#message-textarea-svg.invalid path {
+  fill: #eb9e9e;
+}
+
+#name-required-text,
+#email-required-text,
+#invalid-email-text,
+#subject-required-text,
+#message-required-text {
+  display: none;
+  color: #ff0000;
+  font-size: 80%;
+}
+
+
+
+/***********************************************************************************************
+******************  Disable Chrome styling for autofilled <input> elements *********************
+***********************************************************************************************/
+@-webkit-keyframes autofill {
+    to {
+        color: #000;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
+
+
+/***********************************************************************************************
+**********************************  Confirmation View Styles ***********************************
+***********************************************************************************************/
+#confirmation-body {
+  background-color: #c2d9ed;
+}
+
+#confirmation-wrapper {
+  text-align: center;
+}
+
+#confirmation {
+  color: #275c8c;
+  background-image: url("../images/top-left-corner.jpg"), url("../images/top-right-corner.jpg"), url("../images/bottom-right-corner.jpg"), url("../images/bottom-left-corner.jpg") ;
+  background-position: top left, top right, bottom right, bottom left;
+  background-repeat: no-repeat;
+  background-color: #c2d9ed;
+  display: inline-block;
+  text-align: left;
+  font-family: 'Architects Daughter';
+  font-size: 2.5em;
+  max-width: 750px;
+  min-width: 320px;
+  min-height: 290px;
+  padding: 60px 70px;
+  margin-top: 50px;
+}
+
+#confirmation p {
+  margin: 15px 0;
+}
+
+p#email-sentence {
+  margin: 20px 0 2px;
+}
+
+p#email {
+  margin-top: 0;
+}
+
+.submitted-info {
+  font-weight: bold;
+  color: #2c226b;
+}
+
+
+
+/***********************************************************************************************
+****************************************  404 Styles *******************************************
+***********************************************************************************************/
+
+#header-404 {
+  color: #fff;
+  margin: 25px;
+}
